@@ -9,6 +9,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 
+
 class SyncTableCommand extends Command
 {
     protected function configure()
@@ -17,11 +18,16 @@ class SyncTableCommand extends Command
         ->setDescription('Synchronizes one of your database tables with a
             remote database table by the same name.')
         ->setHelp('Help')
+        ->addArgument('database', InputArgument::REQUIRED, 'The database name.')
         ->addArgument('table-name', InputArgument::REQUIRED, 'The database table name.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('Synchronizing ' . $input->getArgument('table-name'));
+        $output->writeln('Synchronizing '
+            . $input->getArgument('database')
+            . "." 
+            . $input->getArgument('table-name')
+        );
     }
 }
