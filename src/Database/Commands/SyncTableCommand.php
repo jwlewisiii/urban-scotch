@@ -8,6 +8,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
+use Ssh\Connection;
 
 
 class SyncTableCommand extends Command
@@ -26,8 +27,30 @@ class SyncTableCommand extends Command
     {
         $output->writeln('Synchronizing '
             . $input->getArgument('database')
-            . "." 
+            . "."
             . $input->getArgument('table-name')
         );
+
+        $connection = $this->connectToServer();
+    }
+
+    /**
+     * Attempts to connect to remote server.
+     * @return Ssh/Connection
+     */
+    private function connectToServer()
+    {
+        $host = getenv('SERVER_HOST');
+        $username = getenv('SERVER_USERNAME');
+        $password = getenv('SERVER_PASSWORD');
+
+        try {
+            $connection = new Connection($host);
+            $connection->authenticate($username, $password);
+        } catch(Exception $e) {
+            echo 'Caught exception: ',  $e->getMessage(), "\n";
+        }
+
+        return $connection;
     }
 }
