@@ -18,6 +18,11 @@ class Connection {
     $this->connection = ssh2_connect($this->host, $this->port);
   }
 
+  public function getResource()
+  {
+      return $this->connection;
+  }
+
   public function authenticate($username, $password)
   {
     $this->username = $username;

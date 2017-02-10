@@ -33,13 +33,16 @@ class SyncTableCommand extends Command
         $this->table = $input->getArgument('table');
 
         $output->writeln('Synchronizing '
-            . $databaseName
+            . $this->database
             . "."
-            . $tableName
+            . $this->table
         );
 
         $this->connectToServer();
-
+        $file = $this->getRemoteTable();
+        $output->writeln("DOWNLOADED: $file");
+        $this->updateTable($file);
+        $output->writeln("$this->table now updated.");
         // Close ssh connection.
         unset($this->connection);
     }
@@ -65,10 +68,11 @@ class SyncTableCommand extends Command
     /**
      * @return array
      */
-    protected getRemoteTable()
+    protected function getRemoteTable()
     {
         $file = $this->dumpTable();
-        $this->fetchTable($file);
+        $this->scpRemoteFile($file);
+        return $file;
     }
 
     /**
@@ -80,19 +84,28 @@ class SyncTableCommand extends Command
         $username = getenv('REMOTE_USERNAME');
         $password = getenv('REMOTE_PASSWORD');
         $filename = "{$this->database}_{$this->table}_$time.sql";
-        $cmd = "mysqldump -u $username -p$password
-            $this->database $this->table > $filename";
+        $cmd = "mysqldump -u $username -p$password $this->database $this->table > $filename";
 
-        return isset($this->connection->execute($cmd)) ? $filename : false;
+        return ($this->connection->execute($cmd) !== false) ? $filename : false;
+    }
+
+    protected function updateTable($file)
+    {
+        $username = getenv('LOCAL_USERNAME');
+        $password = getenv('LOCAL_PASSWORD');
+        $cmd = "mysql concierge -u $username -p$password < $file";
+        exec($cmd);
+        unlink($file);
     }
 
     /**
+     * Uses an FTP get to grab a file on a remote server.
+     * @todo move all ftp funcitons into a ftp object.
      * @param string file database table file
      * @return string
      */
-    protected function fetchTable($file)
+    protected function ftpGetTable($file)
     {
-
         /**
          * @todo Duplicate code - Refactor
          */
@@ -105,4 +118,18 @@ class SyncTableCommand extends Command
             ftp_get($ftpConnection, $file);
         }
     }
+
+    /**
+     * Uses SCP to grab a file from a remote server.
+     * @todo move all scp funcitons into a scp object.
+     * @param string file sql table file.
+     * @return string
+     */
+     public function scpRemoteFile($file)
+     {
+         /**
+          * @todo remove file after moved to local server.
+          */
+         return ssh2_scp_recv($this->connection->getResource(),$file,$file);
+     }
 }
