@@ -71,7 +71,7 @@ class SyncTableCommand extends Command
     protected function getRemoteTable()
     {
         $file = $this->dumpTable();
-        $this->scpRemoteFile($file);
+        $this->connection->secureCopy()->requestFile($file);
         return $file;
     }
 
@@ -118,18 +118,4 @@ class SyncTableCommand extends Command
             ftp_get($ftpConnection, $file);
         }
     }
-
-    /**
-     * Uses SCP to grab a file from a remote server.
-     * @todo move all scp funcitons into a scp object.
-     * @param string file sql table file.
-     * @return string
-     */
-     public function scpRemoteFile($file)
-     {
-         /**
-          * @todo remove file after moved to local server.
-          */
-         return ssh2_scp_recv($this->connection->getResource(),$file,$file);
-     }
 }

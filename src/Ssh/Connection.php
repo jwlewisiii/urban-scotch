@@ -2,6 +2,8 @@
 
 namespace Ssh;
 
+use Ssh\Protocols\SecureCopy;
+
 class Connection {
 
   private $connection;
@@ -10,6 +12,8 @@ class Connection {
   private $password;
   private $post;
   private $isAuthenticated;
+  // SecureCopy object.
+  private $scp;
 
   function __construct($host, $port = 22)
   {
@@ -46,6 +50,18 @@ class Connection {
     stream_set_blocking($stream, true);
     $stream_out = ssh2_fetch_stream($stream, SSH2_STREAM_STDIO);
     return stream_get_contents($stream_out);
+  }
+
+  /**
+   * Gives access to secure copy protocal.
+   * @return Ssh\Protocals\SecureCopy
+   */
+  public function secureCopy()
+  {
+      if(empty($this->scp))
+          $this->scp = new SecureCopy($this->connection);
+
+      return $this->scp;
   }
 
 }
