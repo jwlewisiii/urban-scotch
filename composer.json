@@ -2,7 +2,7 @@
     "require": {
         "symfony/console": "^3.2",
         "vlucas/phpdotenv": "^2.4",
-        "phpunit/phpunit": "^6.0"
+        "phpunit/phpunit": "5.7"
     },
     "autoload": {
         "psr-4": {"": "src/"}

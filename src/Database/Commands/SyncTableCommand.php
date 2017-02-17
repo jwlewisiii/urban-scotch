@@ -97,25 +97,4 @@ class SyncTableCommand extends Command
         exec($cmd);
         unlink($file);
     }
-
-    /**
-     * Uses an FTP get to grab a file on a remote server.
-     * @todo move all ftp funcitons into a ftp object.
-     * @param string file database table file
-     * @return string
-     */
-    protected function ftpGetTable($file)
-    {
-        /**
-         * @todo Duplicate code - Refactor
-         */
-        $host = getenv('SERVER_HOST');
-        $username = getenv('SERVER_USERNAME');
-        $password = getenv('SERVER_PASSWORD');
-        $ftpConnection = ftp_connect($host);
-
-        if(ftp_login($ftpConnection, $username, $password)) {
-            ftp_get($ftpConnection, $file);
-        }
-    }
 }
