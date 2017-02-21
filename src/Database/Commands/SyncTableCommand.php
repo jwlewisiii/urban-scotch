@@ -67,6 +67,7 @@ class SyncTableCommand extends Command
 
     /**
      * @return array
+     * @todo clean up file on remote machine.
      */
     protected function getRemoteTable()
     {
@@ -93,7 +94,7 @@ class SyncTableCommand extends Command
     {
         $username = getenv('LOCAL_USERNAME');
         $password = getenv('LOCAL_PASSWORD');
-        $cmd = "mysql concierge -u $username -p$password < $file";
+        $cmd = "mysql $this->database -u $username -p$password < $file";
         exec($cmd);
         unlink($file);
     }

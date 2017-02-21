@@ -26,6 +26,6 @@ class SecureCopy {
     public function sendFile($resource, $localFile, $remoteFile = null)
     {
         $remoteFile = isset($remoteFile) ? $remoteFile : $localFile;
-        return ssh2_scp_send($this->connection, $localFile, $remoteFile)
+        return ssh2_scp_send($this->connection, $localFile, $remoteFile);
     }
 }
