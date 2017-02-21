@@ -4,7 +4,7 @@
 require_once __DIR__.'/vendor/autoload.php';
 
 use Symfony\Component\Console\Application;
-use PhpMaster\Commands\FibonacciCommand;
+use Database\Commands\SyncDatabaseCommand;
 use Database\Commands\SyncTableCommand;
 use Dotenv\Dotenv;
 
@@ -13,6 +13,6 @@ $dotenv = new Dotenv(__DIR__);
 $dotenv->load();
 
 $app = new Application();
-$app->add(new FibonacciCommand);
+$app->add(new SyncDatabaseCommand);
 $app->add(new SyncTableCommand);
 $app->run();

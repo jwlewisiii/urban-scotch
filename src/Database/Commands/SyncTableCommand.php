@@ -19,7 +19,7 @@ class SyncTableCommand extends Command
 
     protected function configure()
     {
-      $this->setName('database:sync-table')
+      $this->setName('database:sync-t')
         ->setDescription('Synchronizes one of your database tables with a
             remote database table by the same name.')
         ->setHelp('Help')
