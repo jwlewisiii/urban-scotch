@@ -27,19 +27,22 @@ class Connection {
       return $this->connection;
   }
 
+  /**
+   * Authenticates a user to the remote server.
+   * @param string $username username
+   * @param string $password password
+   * @return bool
+   */
   public function authenticate($username, $password)
   {
     $this->username = $username;
     $this->password = $password;
 
-    $this->isAuthenticated = ssh2_auth_password(
+    $this->isAuthenticated = @ssh2_auth_password(
       $this->connection,
       $this->username,
       $this->password
     );
-
-    if(!$this->isAuthenticated)
-        throw new Exception("Unable to authenticate user, $username.");
 
     return $this->isAuthenticated;
   }
