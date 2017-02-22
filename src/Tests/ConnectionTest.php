@@ -32,4 +32,13 @@ class ConnectionTest extends UrbanScotchTestCase
         );
         $this->assertFalse($results);
     }
+
+    public function testSecureCopyCreation()
+    {
+        $con = new Connection($this->serverHost);
+        $scp = $con->SecureCopy();
+        $this->assertTrue(
+            is_a($scp, 'Ssh\Protocols\SecureCopy')
+        );
+    }
 }
