@@ -2,20 +2,14 @@
 
 namespace Database\Commands;
 
-use Symfony\Component\Console\Command\Command;
+use Database\Commands\UrbanScotchDbCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Formatter\OutputFormatterStyle;
-use Ssh\Connection;
 
-
-class SyncTableCommand extends Command
+class SyncTableCommand extends UrbanScotchDbCommand
 {
-    private $connection;
-    private $database;
-    private $table;
 
     protected function configure()
     {
@@ -45,24 +39,6 @@ class SyncTableCommand extends Command
         $output->writeln("$this->table now updated.");
         // Close ssh connection.
         unset($this->connection);
-    }
-
-    /**
-     * Attempts to connect to remote server.
-     * @return Ssh/Connection
-     */
-    protected function connectToServer()
-    {
-        $host = getenv('SERVER_HOST');
-        $username = getenv('SERVER_USERNAME');
-        $password = getenv('SERVER_PASSWORD');
-
-        try {
-            $this->connection = new Connection($host);
-            $this->connection->authenticate($username, $password);
-        } catch(Exception $e) {
-            echo 'Caught exception: ',  $e->getMessage(), "\n";
-        }
     }
 
     /**
