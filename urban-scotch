@@ -6,6 +6,7 @@ require_once __DIR__.'/vendor/autoload.php';
 use Symfony\Component\Console\Application;
 use Database\Commands\SyncDatabaseCommand;
 use Database\Commands\SyncTableCommand;
+use Database\Commands\ListTablesCommand;
 use Dotenv\Dotenv;
 
 // Load env file.
@@ -15,4 +16,5 @@ $dotenv->load();
 $app = new Application();
 $app->add(new SyncDatabaseCommand);
 $app->add(new SyncTableCommand);
+$app->add(new ListTablesCommand);
 $app->run();
