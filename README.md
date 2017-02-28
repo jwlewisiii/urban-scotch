@@ -26,5 +26,10 @@ Currently only works with MySQL databases.
             <td>Updates local database table to be equivalent with a remote database table by the same name.</td>
             <td><pre> php urban-scotch database:sync-t {database} {table} </pre></td>
         </tr>
+        <tr>
+            <td>List Tables</td>
+            <td>Displays a list of tables from a remote database.</td>
+            <td><pre> php urban-scotch database:list-t {database} </pre></td>
+        </tr>
     </tbody>
 </table>
