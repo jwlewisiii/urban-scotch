@@ -21,14 +21,14 @@ Currently only works with MySQL databases.
         <tr>
             <td>Synchronize Database</td>
             <td>Updates local database to be equivalent with a remote database by the same name.</td>
-            <td><pre> php urban-scotch database:sync-db <database> </pre></td>
+            <td><pre> php urban-scotch database:sync-db {database} </pre></td>
             <td>database</td>
             <td>N/A</td>
         </tr>
         <tr>
             <td>Synchronize Table</td>
             <td>Updates local database table to be equivalent with a remote database table by the same name.</td>
-            <td><pre> php urban-scotch database:sync-t <database> <table> </pre></td>
+            <td><pre> php urban-scotch database:sync-t {database} {table} </pre></td>
             <td>database, table</td>
             <td>N/A</td>
         </tr>
