@@ -43,12 +43,12 @@ class SyncTableCommand extends UrbanScotchDbCommand
 
     /**
      * @return array
-     * @todo clean up file on remote machine.
      */
     protected function getRemoteTable()
     {
         $file = $this->dumpTable();
         $this->connection->secureCopy()->requestFile($file);
+        $this->connection->execute("rm $file");
         return $file;
     }
 

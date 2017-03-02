@@ -36,12 +36,13 @@ class SyncDatabaseCommand extends UrbanScotchDbCommand
 
     /**
      * Copies the database SQL file to local machine.
-     * @todo clean up file on remote machine.
+     * @return string
      */
     protected function getRemoteDatabase()
     {
         $file = $this->dumpDatabase();
         $this->connection->secureCopy()->requestFile($file);
+        $this->connection->execute("rm $file");
         return $file;
     }
 

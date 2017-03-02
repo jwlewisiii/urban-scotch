@@ -47,12 +47,20 @@ class Connection {
     return $this->isAuthenticated;
   }
 
+  /**
+   * Executes a command on the remote server.
+   * @param string $command
+   * @return bool
+   */
   public function execute($command)
   {
-    $stream = ssh2_exec($this->connection, $command);
-    stream_set_blocking($stream, true);
-    $stream_out = ssh2_fetch_stream($stream, SSH2_STREAM_STDIO);
-    return stream_get_contents($stream_out);
+      if(!is_string($command))
+        return false;
+
+      $stream = ssh2_exec($this->connection, $command);
+      stream_set_blocking($stream, true);
+      $stream_out = ssh2_fetch_stream($stream, SSH2_STREAM_STDIO);
+      return stream_get_contents($stream_out);
   }
 
   /**
