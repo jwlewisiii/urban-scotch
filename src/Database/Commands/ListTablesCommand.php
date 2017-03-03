@@ -25,25 +25,56 @@ class ListTablesCommand extends UrbanScotchDbCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->database = $input->getArgument('database');
-        $output->writeln("TABLES:");
-
-        //Ssh to server.
+        $output->writeln("TABLES: \n---------- \n");
         $this->connectToServer();
-        if($input->getOption('both')) {
-            $remoteTables = $this->getTableList();
 
-        } else {
-            $results = $this->getTableList();
-        }
+        $results = '';
+        if($input->getOption('both'))
+            $results = $this->getBothList();
+        elseif($input->getOption('local'))
+            $results = $this->getLocalList();
+        else
+            $results = $this->getRemoteList();
 
         $output->writeln($results);
+        $output->writeln("\n---------- \n");
     }
 
-    protected function getTableList()
+    /**
+     * Gets a list of tables from both a local and remote database by the same
+     * name.
+     * @return string
+     */
+    protected function getBothList()
+    {
+        $localList = $this->getLocalList();
+        $remoteList = $this->getRemoteList();
+        // var_dump($localList);
+        return 'sdf';
+    }
+
+    /**
+     * Gets a list of tables from a remote database.
+     * @return string
+     */
+    protected function getRemoteList()
     {
         $username = getenv('REMOTE_USERNAME');
         $password = getenv('REMOTE_PASSWORD');
         $cmd = "mysql -u $username -p$password -e 'SHOW TABLES' $this->database";
         return $this->connection->execute($cmd);
+    }
+
+    /**
+     * Gets a list of tables from the local database.
+     * @return string
+     */
+    protected function getLocalList()
+    {
+        $username = getenv('LOCAL_USERNAME');
+        $password = getenv('LOCAL_PASSWORD');
+        $cmd = "mysql -u $username -p$password -e 'SHOW TABLES' $this->database";
+        $lastLine = system($cmd, $results);
+        return $results;
     }
 }
