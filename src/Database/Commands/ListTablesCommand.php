@@ -25,7 +25,6 @@ class ListTablesCommand extends UrbanScotchDbCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->database = $input->getArgument('database');
-        $output->writeln("TABLES: \n---------- \n");
         $this->connectToServer();
 
         $results = '';
@@ -37,7 +36,7 @@ class ListTablesCommand extends UrbanScotchDbCommand
             $results = $this->getRemoteList();
 
         $output->writeln($results);
-        $output->writeln("\n---------- \n");
+        $output->writeln("----------");
     }
 
     /**
@@ -49,8 +48,7 @@ class ListTablesCommand extends UrbanScotchDbCommand
     {
         $localList = $this->getLocalList();
         $remoteList = $this->getRemoteList();
-        // var_dump($localList);
-        return 'sdf';
+        return $localList . "\n\n" . $remoteList;
     }
 
     /**
@@ -62,7 +60,8 @@ class ListTablesCommand extends UrbanScotchDbCommand
         $username = getenv('REMOTE_USERNAME');
         $password = getenv('REMOTE_PASSWORD');
         $cmd = "mysql -u $username -p$password -e 'SHOW TABLES' $this->database";
-        return $this->connection->execute($cmd);
+        $results = "REMOTE TABLES: \n---------- \n\n" . $this->connection->execute($cmd);
+        return $results;
     }
 
     /**
@@ -74,7 +73,8 @@ class ListTablesCommand extends UrbanScotchDbCommand
         $username = getenv('LOCAL_USERNAME');
         $password = getenv('LOCAL_PASSWORD');
         $cmd = "mysql -u $username -p$password -e 'SHOW TABLES' $this->database";
-        $lastLine = system($cmd, $results);
-        return $results;
+        echo "LOCAL TABLES: \n---------- \n";
+        @exec($cmd, $results);
+        return implode("\n", $results);
     }
 }
