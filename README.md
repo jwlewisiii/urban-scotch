@@ -6,6 +6,14 @@ Requires PHP's ssh2 extension.
 
 Currently only works with MySQL databases.
 
+<h2>Getting Started</h2>
+Clone the repo.
+<pre>git clone https://github.com/jwlewisiii/urban-scotch.git</pre>
+Install composer packages.
+<pre>cd urban-scotch/ && composer install</pre>
+Set up config file by changing .env.example to .env and setting the variables.
+Run commands! 
+
 <h2>Commands</h2>
 <table>
     <thead>
