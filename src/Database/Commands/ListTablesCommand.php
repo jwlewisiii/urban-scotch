@@ -35,7 +35,7 @@ class ListTablesCommand extends UrbanScotchDbCommand
         else
             $results = $this->getRemoteList();
 
-        $output->writeln($results);
+        // $output->writeln($results);
         $output->writeln("----------");
     }
 
@@ -74,7 +74,8 @@ class ListTablesCommand extends UrbanScotchDbCommand
         $password = getenv('LOCAL_PASSWORD');
         $cmd = "mysql -u $username -p$password -e 'SHOW TABLES' $this->database";
         echo "LOCAL TABLES: \n---------- \n";
-        @exec($cmd, $results);
-        return implode("\n", $results);
+        $temp = shell_exec($cmd);
+        var;
+        return implode("\n", $results=[]);
     }
 }
