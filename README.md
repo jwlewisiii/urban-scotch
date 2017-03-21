@@ -12,8 +12,9 @@ Clone the repo.
 Install composer packages.
 <pre>cd urban-scotch/ && composer install</pre>
 Set up config file by changing .env.example to .env and setting the variables.
-<br>
-Run commands!
+<pre>mv .env.example .env</pre>
+Add symbolic link to path (Optional).
+<pre>ln -s /path/to/urban-scotch /path/to/symlink</pre>
 
 <h2>Commands</h2>
 <table>
