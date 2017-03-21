@@ -46,7 +46,7 @@ Now you can easily interface with a remote database using urban-scotch
         <tr>
             <td>Execute Command</td>
             <td>Executes a SQL query on a database.</td>
-            <td><pre> php urban-scotch database:exec {database} '{database}' </pre></td>
+            <td><pre> php urban-scotch database:exec {database} '{query}' </pre></td>
         </tr>
     </tbody>
 </table>
