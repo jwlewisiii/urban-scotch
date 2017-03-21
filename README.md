@@ -13,7 +13,7 @@ Install composer packages.
 <pre>cd urban-scotch/ && composer install</pre>
 Set up config file by changing .env.example to .env and setting the variables.
 <br>
-Run commands! 
+Run commands!
 
 <h2>Commands</h2>
 <table>
@@ -39,6 +39,11 @@ Run commands!
             <td>List Tables</td>
             <td>Displays a list of tables from a remote database.</td>
             <td><pre> php urban-scotch database:list-t {database} </pre></td>
+        </tr>
+        <tr>
+            <td>Execute Command</td>
+            <td>Executes a SQL query on a database.</td>
+            <td><pre> php urban-scotch database:exec {database} '{database}' </pre></td>
         </tr>
     </tbody>
 </table>
