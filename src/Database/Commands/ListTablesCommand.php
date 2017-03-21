@@ -75,7 +75,6 @@ class ListTablesCommand extends UrbanScotchDbCommand
         $cmd = "mysql -u $username -p$password -e 'SHOW TABLES' $this->database";
         echo "LOCAL TABLES: \n---------- \n";
         $temp = shell_exec($cmd);
-        var;
         return implode("\n", $results=[]);
     }
 }
