@@ -15,6 +15,8 @@ Set up config file by changing .env.example to .env and setting the variables.
 <pre>mv .env.example .env</pre>
 Add symbolic link to path (Optional).
 <pre>ln -s /path/to/urban-scotch /path/to/symlink</pre>
+Now you can easily interface with a remote database using urban-scotch
+<pre>urban-scotch database:sync-db database </pre>
 
 <h2>Commands</h2>
 <table>
