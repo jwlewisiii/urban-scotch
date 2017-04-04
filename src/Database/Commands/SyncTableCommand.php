@@ -61,7 +61,7 @@ class SyncTableCommand extends UrbanScotchDbCommand
         $username = getenv('REMOTE_USERNAME');
         $password = getenv('REMOTE_PASSWORD');
         $filename = "{$this->database}_{$this->table}_$time.sql";
-        $cmd = "mysqldump -u $username -p$password $this->database $this->table > $filename";
+        $cmd = "mysqldump --single-transaction -u $username -p$password $this->database $this->table > $filename";
 
         return ($this->connection->execute($cmd) !== false) ? $filename : false;
     }
