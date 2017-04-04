@@ -41,9 +41,10 @@ class SyncDatabaseCommand extends UrbanScotchDbCommand
     protected function getRemoteDatabase()
     {
         $file = $this->dumpDatabase();
-        $this->connection->secureCopy()->requestFile($file);
+        $localFile = "/home/dev/$file";
+        $this->connection->secureCopy()->requestFile($file, $localFile);
         $this->connection->execute("rm $file");
-        return $file;
+        return $localFile;
     }
 
     /**
@@ -56,7 +57,7 @@ class SyncDatabaseCommand extends UrbanScotchDbCommand
          $username = getenv('REMOTE_USERNAME');
          $password = getenv('REMOTE_PASSWORD');
          $filename = "{$this->database}_$time.sql";
-         $cmd = "mysqldump -u $username -p$password $this->database > $filename";
+         $cmd = "mysqldump --single-transaction -u $username -p$password $this->database > $filename";
 
          return ($this->connection->execute($cmd) !== false) ? $filename : false;
      }
